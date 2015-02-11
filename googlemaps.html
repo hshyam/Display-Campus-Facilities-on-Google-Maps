@@ -1,0 +1,177 @@
+<!-- 
+CSci4131 Spring 2014
+ Assignment# 3
+ name: Harshita Shyam
+ student id: 4404640
+ x500 id: shyam007
+-->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Interactive Google Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      #map-canvas, html, body {
+        width: 100%;
+	      height: 100%;
+        margin: 0px;
+        padding: 0px;
+      }
+        h.title 
+      {
+      	font-size: 1.00em;
+      }
+  </style>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
+<script>
+		var map;
+		function initialize() {
+	  var mapOptions = {
+	  zoom: 16,
+		center: new google.maps.LatLng(44.977276, -93.232266),
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+		  	};
+
+		map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+
+    var image = 'datafiles/icon.png';
+    var locations = [44.977276, -93.232266, 44.977018, -93.234444,
+              44.978354, -93.234409, 44.977995, -93.235415,
+              44.978239, -93.236964, 44.976662, -93.236310, 44.977197, -93.235973, 44.977679, -93.236707, 44.971201, -93.241777, 44.976306, -93.237437];
+    var names = ["Armory", "Pillsbury Hall", "Folwell Hall", "Jones Hall", "Pillsbury Statue", "Wesbrook Hall", "Nicholson Hall", "Eddy Hall", "Music Education", "Wulling Hall"];
+    var infoWindow  = new Array();
+    
+    var contentString = new Array();
+    contentString[0] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Armory</h><div id="bodyContent">'+
+      '<p>Architect: Charles Aldrich<br>Built for athletics and military drill, as well as performing arts and social activities. Memorial plaques at the front entrance honor students, faculty, and alumni who fought in the Spanish-American War.</p>'+
+      '<img src="datafiles\\building_images\\armory.jpg" width="200px" height="150px">'
+      '</div></div>';
+    contentString[1] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Pillsbury Hall</h><div id="bodyContent">'+
+      '<p>Architect: Leroy Buffington with Harvey Ellis<br>Built as Science Hall. Named for Governor John S. Pillsbury.</p>'+
+      '<img src="datafiles\\building_images\\pillsbury.jpg" width="200px" height="150px">'
+      '</div></div>';
+    contentString[2] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Folwell Hall</h><div id="bodyContent">'+
+      '<p>Architect: Clarence H. Johnston Sr.<br>When Old Main burned in 1904, Folwell Hall was built to house displaced departments. Named for William Watts Folwell, first president of the University, 1869-84.</p>'+
+      '<img src="datafiles\\building_images\\folwell.jpg" width="200px" height="150px">'
+      '</div></div>';
+    contentString[3] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Jones Hall</h><div id="bodyContent">'+
+      '<p>Architect: Charles Aldrich<br>Built as Physics Building. Named for Frederick S. Jones, professor of physics and dean of the College of Engineering.</p>'+
+      '<img src="datafiles\\building_images\\jones.jpg" width="200px" height="150px">'
+      '</div></div>';
+    contentString[4] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Pillsbury Statue</h><div id="bodyContent">'+
+      '<p>Architect: Daniel C. French, sculptor<br>Pillsbury statue located across the street from Burton Hall.</p>'+
+      '<img src="datafiles\\building_images\\statue.jpg" width="200px" height="150px">'
+      '</div></div>';
+    contentString[5] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Wesbrook Hall</h><div id="bodyContent">'+
+      '<p>Architect: Frederick Corser<br>Built as Laboratory of Medical Science. In 1912, dentistry moved here. Named for Frank Wesbrook, professor of pathology and bacteriology and dean of the College of Medicine and Surgery.</p>'+
+      '<img src="datafiles\\building_images\\wesbrook.jpg" width="200px" height="150px">'
+      '</div></div>';
+      contentString[6] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Nicholson Hall</h><div id="bodyContent">'+
+      '<p>Architect: LeRoy Buffington with Harvey Ellis<br>Built as chemical laboratory. In 1914, chemistry moved to the mall area and Nicholson was remodeled for the mens union until Coffman Memorial Union was built as a coed student union. Named for Edward E. Nicholson, professor of chemistry and later dean of Student Affairs.</p>'+
+      '<img src="datafiles\\building_images\\nicholson.jpg" width="200px" height="150px">'
+      '</div></div>';
+      contentString[7] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Eddy Hall</h><div id="bodyContent">'+
+      '<p>Architect: LeRoy Buffington<br>Built as Mechanic Arts. It is the oldest existing building on campus. Named for Henry Turner Eddy, professor of engineering and mathematics and dean of the Graduate School.</p>'+
+      '<img src="datafiles\\building_images\\eddy.jpg" width="200px" height="150px">'
+      '</div></div>';
+      contentString[8] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Music Education</h><div id="bodyContent">'+
+      '<p>Architect: Warren H. Hayes<br>Built as Student Christian Association building. Acquired by the University, it housed Child Welfare and Music Education.</p>'+
+      '<img src="datafiles\\building_images\\music.jpg" width="200px" height="150px">'
+      '</div></div>';
+      contentString[9] = '<div id="content"><div id="siteNotice"></div>'+
+      '<h class="title">Name: Wulling Hall </h><div id="bodyContent">'+
+      '<p>Architect: Allen Stem and Charles Reed<br>Built as Medical Hall; named Millard Hall in 1906. Fire damaged the building. It later became the site for the pharmacy building. Named for Frederick J.", "Wulling, first dean and founder of the College of Pharmacy.</p>'+
+      '<img src="datafiles\\building_images\\wulling.jpg" width="200px" height="150px">'
+      '</div></div>';
+
+
+      var markers = new Array();
+
+      for (i = 0; i<names.length; i++) {
+        var title = locations[i*2]+","+locations[(i*2)+1];
+        markers[i] = new google.maps.Marker({
+          position: new google.maps.LatLng(locations[i*2], locations[(i*2)+1]),
+          map: map,
+          icon: image,
+          title: "Name: "+names[i]
+        });
+         infoWindow[i] = new google.maps.InfoWindow({
+            content: contentString[i]
+        });
+      }
+
+      google.maps.event.addListener(markers[0], 'click', function() {
+      infoWindow[0].open(map,markers[0]);
+    });
+    google.maps.event.addListener(markers[1], 'click', function() {
+      infoWindow[1].open(map,markers[1]);
+    });
+    google.maps.event.addListener(markers[2], 'click', function() {
+      infoWindow[2].open(map,markers[2]);
+    });
+    google.maps.event.addListener(markers[3], 'click', function() {
+      infoWindow[3].open(map,markers[3]);
+    });
+    google.maps.event.addListener(markers[4], 'click', function() {
+      infoWindow[4].open(map,markers[4]);
+    });
+    google.maps.event.addListener(markers[5], 'click', function() {
+      infoWindow[5].open(map,markers[5]);
+    });
+    google.maps.event.addListener(markers[6], 'click', function() {
+      infoWindow[6].open(map,markers[6]);
+    });
+    google.maps.event.addListener(markers[7], 'click', function() {
+      infoWindow[7].open(map,markers[7]);
+    });
+    google.maps.event.addListener(markers[8], 'click', function() {
+      infoWindow[8].open(map,markers[8]);
+    });
+    google.maps.event.addListener(markers[9], 'click', function() {
+      infoWindow[9].open(map,markers[9]);
+    });
+  
+
+      google.maps.event.addListener(map, 'click', function(event) {
+                  setTimeout(placeMarker(event), 600);
+     });
+};
+
+      function placeMarker(event) {
+          name = event.latLng;
+          var marker = new google.maps.Marker({
+              position: event.latLng,
+              map: map,
+              title: name
+          });
+
+        infoWindow = new google.maps.InfoWindow({
+              content: "Click location"
+          });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infoWindow.open(map,marker);
+        });
+      }
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
